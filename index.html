@@ -1,0 +1,599 @@
+
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--sage:#4A7C6F;--sage-light:#E8F2F0;--sage-mid:#B8D8D2;--slate:#2C3E50;--slate-light:#F4F6F8;--muted:#8A9BA8;--border-c:#DDE4E9;--white:#FFFFFF;--success:#3D8A6E;--warn:#C47B2E;--danger:#B05555;--text:#1A2733;--cancel:#6B7A8D}
+html,body{height:100%;height:100dvh;overflow:hidden}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--text);background:var(--white)}
+.app{display:flex;flex-direction:column;height:100%;height:100dvh;background:var(--white)}
+.header{background:var(--white);padding:max(env(safe-area-inset-top),12px) 1rem 0;border-bottom:1px solid var(--border-c)}
+.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem}
+.header-title{font-size:19px;font-weight:600;color:var(--slate)}
+.icon-btn{width:40px;height:40px;border:1px solid var(--border-c);border-radius:10px;background:var(--white);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);font-size:18px}
+.icon-btn:active{background:var(--slate-light)}
+.tabs{display:flex;gap:0}
+.tab{flex:1;padding:10px 4px;font-size:12px;font-weight:400;color:var(--muted);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all .15s;text-align:center;min-height:44px}
+.tab.active{color:var(--sage);border-bottom-color:var(--sage);font-weight:600}
+.content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:.85rem 1rem;background:var(--slate-light);padding-bottom:max(env(safe-area-inset-bottom),8px)}
+.search{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--border-c);border-radius:10px;padding:0 12px;margin-bottom:12px;height:44px}
+.search input{border:none;outline:none;font-size:15px;flex:1;color:var(--text);background:none}
+.search input::placeholder{color:var(--muted)}
+.section-label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;margin-top:1rem}
+.section-label:first-child{margin-top:0}
+.card{background:var(--white);border:1px solid var(--border-c);border-radius:12px;padding:1rem;margin-bottom:8px;cursor:pointer;transition:border-color .15s;active:opacity:.9}
+.card:active{border-color:var(--sage-mid)}
+.card-row{display:flex;align-items:center;justify-content:space-between}
+.card-name{font-size:15px;font-weight:500;color:var(--slate)}
+.card-amount{font-size:15px;font-weight:600;color:var(--sage)}
+.card-sub{display:flex;align-items:center;gap:6px;margin-top:5px;flex-wrap:wrap}
+.card-date{font-size:12px;color:var(--muted)}
+.badge{font-size:11px;padding:3px 9px;border-radius:20px;font-weight:500}
+.badge-warn{background:#FDF3E7;color:#A0651C}
+.badge-danger{background:#FBF0F0;color:#904444}
+.badge-ok{background:#EAF5F1;color:#2F7A5E}
+.badge-muted{background:#F0F2F4;color:#6B7A8D}
+.badge-report{background:#EEF0FB;color:#4A5AB5}
+.fab-wrap{display:flex;justify-content:center;padding:.6rem 0;padding-bottom:max(calc(env(safe-area-inset-bottom) + .4rem),.6rem);background:var(--white);border-top:1px solid var(--border-c)}
+.fab{width:52px;height:52px;border-radius:50%;background:var(--sage);border:none;color:white;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 3px 10px rgba(74,124,111,.4)}
+.fab:active{background:#3d6b5f;transform:scale(.96)}
+.devis-card{background:var(--white);border:1px solid var(--border-c);border-radius:12px;padding:1rem;margin-bottom:8px;cursor:pointer;transition:border-color .15s}
+.devis-card:active{border-color:var(--sage-mid)}
+.devis-card.annule{opacity:.55}
+.devis-title{font-size:14px;font-weight:500;color:var(--slate)}
+.devis-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px}
+.prob-bar-wrap{margin-top:8px}
+.prob-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:3px}
+.prob-bar{height:5px;background:#E8EFF5;border-radius:3px}
+.prob-fill{height:5px;border-radius:3px}
+.metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.metric{background:var(--white);border:1px solid var(--border-c);border-radius:12px;padding:.85rem 1rem}
+.metric-label{font-size:11px;color:var(--muted);margin-bottom:4px}
+.metric-val{font-size:20px;font-weight:600;color:var(--slate)}
+.metric-val.green{color:var(--success)}
+.obj-wrap{background:var(--white);border:1px solid var(--border-c);border-radius:12px;padding:1rem;margin-bottom:12px}
+.obj-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.obj-title{font-size:13px;font-weight:500;color:var(--slate)}
+.obj-edit{font-size:12px;color:var(--sage);cursor:pointer;background:none;border:none;padding:4px 0;min-height:44px;display:flex;align-items:center}
+.obj-bar{height:8px;background:#E8EFF5;border-radius:4px;margin-bottom:6px}
+.obj-fill{height:8px;border-radius:4px;background:var(--sage)}
+.obj-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}
+.month-select-wrap{background:var(--white);border:1px solid var(--border-c);border-radius:12px;padding:.75rem 1rem;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.month-select-wrap label{font-size:12px;color:var(--muted);white-space:nowrap}
+.month-select{flex:1;border:1px solid var(--border-c);border-radius:8px;padding:8px 10px;font-size:14px;color:var(--slate);background:var(--white);outline:none;cursor:pointer;min-height:44px}
+.month-select:focus{border-color:var(--sage)}
+.month-block{margin-bottom:16px}
+.month-header-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.month-title-txt{font-size:12px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.month-total{font-size:12px;font-weight:600;color:var(--success)}
+.month-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border-c)}
+.month-row:last-child{border-bottom:none}
+.mrow-name{font-size:13px;color:var(--slate)}
+.mrow-right{text-align:right}
+.mrow-amount{font-size:13px;font-weight:600;color:var(--success)}
+.mrow-date{font-size:11px;color:var(--muted)}
+.sort-panel{background:var(--white);border:1px solid var(--border-c);border-radius:12px;padding:.75rem 1rem;margin-bottom:12px}
+.sort-panel-title{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.sort-options{display:flex;flex-wrap:wrap;gap:6px}
+.sort-chip{font-size:13px;padding:7px 14px;border:1px solid var(--border-c);border-radius:20px;background:var(--white);color:var(--muted);cursor:pointer;min-height:36px}
+.sort-chip.active{border-color:var(--sage);color:var(--sage);background:var(--sage-light)}
+.empty-state{text-align:center;padding:3rem 1rem}
+.empty-icon{font-size:36px;margin-bottom:12px;color:var(--muted)}
+.empty-title{font-size:15px;font-weight:500;color:var(--slate);margin-bottom:4px}
+.empty-sub{font-size:13px;color:var(--muted)}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(26,39,51,.55);display:flex;align-items:flex-end;z-index:100}
+.modal{background:var(--white);width:100%;border-radius:18px 18px 0 0;padding:1.25rem;padding-bottom:max(calc(env(safe-area-inset-bottom) + 1rem),1.25rem);max-height:90dvh;overflow-y:auto}
+.modal-title{font-size:17px;font-weight:600;color:var(--slate);margin-bottom:.25rem}
+.modal-sub{font-size:13px;color:var(--muted);margin-bottom:1rem}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px;font-weight:500}
+.field input,.field select{width:100%;height:44px;border:1px solid var(--border-c);border-radius:10px;padding:0 12px;font-size:16px;outline:none;color:var(--text);background:var(--white)}
+.field input:focus,.field select:focus{border-color:var(--sage)}
+.modal-actions{display:flex;gap:8px;margin-top:16px}
+.btn-primary{flex:1;height:48px;background:var(--sage);color:white;border:none;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer}
+.btn-primary:active{background:#3d6b5f}
+.btn-secondary{height:48px;padding:0 18px;background:var(--white);color:var(--muted);border:1px solid var(--border-c);border-radius:10px;font-size:15px;cursor:pointer}
+.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.action-btn{padding:16px 8px;border:1px solid var(--border-c);border-radius:12px;background:var(--white);cursor:pointer;text-align:center;transition:all .15s;min-height:72px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.action-btn:active{opacity:.85}
+.action-btn.signe{border-color:#3D8A6E;background:#EAF5F1}
+.action-btn.annule{border-color:#B05555;background:#FBF0F0}
+.action-btn.reporte{border-color:#4A5AB5;background:#EEF0FB}
+.action-btn.modifier{border-color:var(--sage);background:var(--sage-light)}
+.action-icon{font-size:22px;margin-bottom:5px}
+.action-label{font-size:13px;font-weight:500}
+.action-label.green{color:#2F7A5E}
+.action-label.red{color:#904444}
+.action-label.blue{color:#4A5AB5}
+.action-label.sage{color:var(--sage)}
+.divider{height:1px;background:var(--border-c);margin:12px 0}
+.app-wrap{position:relative;height:100%;height:100dvh}
+</style>
+
+<div class="app-wrap">
+<div class="app" id="app" style="border-radius:0;border:none">
+  <div class="header">
+    <div class="header-top">
+      <span class="header-title" id="header-title">Relances</span>
+      <button class="icon-btn" onclick="toggleSort()" aria-label="Trier"><i class="ti ti-adjustments-horizontal" aria-hidden="true"></i></button>
+    </div>
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('relances',this)"><i class="ti ti-bell" style="font-size:14px;margin-right:3px" aria-hidden="true"></i>Relances</button>
+      <button class="tab" onclick="switchTab('devis',this)"><i class="ti ti-file-description" style="font-size:14px;margin-right:3px" aria-hidden="true"></i>Devis</button>
+      <button class="tab" onclick="switchTab('portefeuille',this)"><i class="ti ti-chart-bar" style="font-size:14px;margin-right:3px" aria-hidden="true"></i>Portefeuille</button>
+    </div>
+  </div>
+  <div class="content" id="content"></div>
+  <div class="fab-wrap"><button class="fab" onclick="openAddModal()" aria-label="Ajouter">+</button></div>
+</div>
+</div>
+
+<script>
+const S={
+  tab:'relances',showSort:false,
+  sortRelances:'date',sortDevis:'date',
+  filterMois:'tous',objectif:20000,
+  relances:[
+    {id:1,name:'Martin Dupont',date:'2026-06-18',montant:3400,urgence:'rouge',note:'Devis switch réseau'},
+    {id:2,name:'Sophie Lemaire',date:'2026-06-25',montant:1850,urgence:'orange',note:''},
+    {id:3,name:'Groupe ACME',date:'2026-06-28',montant:7200,urgence:'orange',note:'Rappeler après 17h'},
+    {id:4,name:'Julie Bernard',date:'2026-07-05',montant:920,urgence:'vert',note:''},
+  ],
+  devis:[
+    {id:1,nom:'Serveurs NAS + config réseau',client:'Groupe ACME',montant:7200,date:'2026-06-10',proba:85,statut:'en_cours'},
+    {id:2,nom:'Postes de travail x5',client:'Martin Dupont',montant:3400,date:'2026-06-15',proba:60,statut:'en_cours'},
+    {id:3,nom:'Switch 48 ports + câblage',client:'Infra Plus',montant:2100,date:'2026-06-01',proba:40,statut:'en_cours'},
+    {id:4,nom:'Logiciels ERP licence annuelle',client:'Tech Conseil',montant:5500,date:'2026-05-20',proba:90,statut:'signe'},
+    {id:5,nom:'Maintenance préventive Q3',client:'Réseau Santé',montant:1200,date:'2026-05-10',proba:100,statut:'signe'},
+    {id:6,nom:'Renouvellement licences Adobe',client:'Studio Créa',montant:890,date:'2026-04-15',proba:100,statut:'signe'},
+  ],
+};
+
+function fmt(n){return n.toLocaleString('fr-FR')+'€'}
+function diffDays(d){return Math.round((new Date(d)-new Date())/(1000*60*60*24))}
+function fmtDate(d){return new Date(d).toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}
+function toISO(d){return d.toISOString().split('T')[0]}
+
+function getMonthOptions(){
+  const now=new Date();
+  const year=now.getFullYear();
+  const curMonth=now.getMonth();
+  const months=[];
+  for(let m=0;m<=curMonth;m++){
+    const key=year+'-'+(m+1).toString().padStart(2,'0');
+    months.push(key);
+  }
+  return months.reverse();
+}
+
+function monthLabel(key){
+  const [y,m]=key.split('-');
+  return new Date(y,parseInt(m)-1,1).toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
+}
+
+function switchTab(tab,el){
+  S.tab=tab;S.showSort=false;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('header-title').textContent={relances:'Relances',devis:'Devis',portefeuille:'Portefeuille'}[tab];
+  render();
+}
+function toggleSort(){S.showSort=!S.showSort;render()}
+function setSortRelances(v){S.sortRelances=v;render()}
+function setSortDevis(v){S.sortDevis=v;render()}
+function setFilterMois(v){S.filterMois=v;render()}
+
+function sortPanel(options,current,fn){
+  if(!S.showSort) return '';
+  let h=`<div class="sort-panel"><div class="sort-panel-title">Trier par</div><div class="sort-options">`;
+  options.forEach(o=>h+=`<button class="sort-chip ${current===o.val?'active':''}" onclick="${fn}('${o.val}')">${o.label}</button>`);
+  return h+'</div></div>';
+}
+
+function urgBadge(u){
+  if(u==='rouge') return '<span class="badge badge-danger">Urgent</span>';
+  if(u==='orange') return '<span class="badge badge-warn">Bientôt</span>';
+  return '<span class="badge badge-ok">À venir</span>';
+}
+
+function render(){
+  const c=document.getElementById('content');
+  if(S.tab==='relances') c.innerHTML=renderRelances();
+  else if(S.tab==='devis') c.innerHTML=renderDevis();
+  else c.innerHTML=renderPortefeuille();
+}
+
+function renderRelances(){
+  let data=[...S.relances];
+  if(S.sortRelances==='montant') data.sort((a,b)=>b.montant-a.montant);
+  else if(S.sortRelances==='nom') data.sort((a,b)=>a.name.localeCompare(b.name));
+  else data.sort((a,b)=>new Date(a.date)-new Date(b.date));
+  let h=sortPanel([{val:'date',label:'Date'},{val:'montant',label:'Montant'},{val:'nom',label:'Nom'}],S.sortRelances,'setSortRelances');
+  h+='<div class="search"><i class="ti ti-search" style="color:var(--muted);font-size:16px" aria-hidden="true"></i><input placeholder="Rechercher un client..."></div>';
+  const overdue=data.filter(r=>diffDays(r.date)<0);
+  const upcoming=data.filter(r=>diffDays(r.date)>=0);
+  if(overdue.length){
+    h+='<div class="section-label">En retard</div>';
+    overdue.forEach(r=>{
+      h+=`<div class="card" onclick="openRelanceModal(${r.id})">
+        <div class="card-row"><span class="card-name">${r.name}</span><span class="card-amount">${fmt(r.montant)}</span></div>
+        <div class="card-sub"><span class="card-date"><i class="ti ti-calendar" style="font-size:12px" aria-hidden="true"></i> ${fmtDate(r.date)}</span>${urgBadge(r.urgence)}<span class="badge badge-danger">${Math.abs(diffDays(r.date))}j de retard</span></div>
+        ${r.note?`<div style="font-size:12px;color:var(--muted);margin-top:6px;font-style:italic">${r.note}</div>`:''}
+      </div>`;
+    });
+  }
+  if(upcoming.length){
+    h+='<div class="section-label">À venir</div>';
+    upcoming.forEach(r=>{
+      const d=diffDays(r.date);
+      h+=`<div class="card" onclick="openRelanceModal(${r.id})">
+        <div class="card-row"><span class="card-name">${r.name}</span><span class="card-amount">${fmt(r.montant)}</span></div>
+        <div class="card-sub"><span class="card-date"><i class="ti ti-calendar" style="font-size:12px" aria-hidden="true"></i> ${fmtDate(r.date)}</span>${urgBadge(r.urgence)}<span class="card-date">dans ${d}j</span></div>
+        ${r.note?`<div style="font-size:12px;color:var(--muted);margin-top:6px;font-style:italic">${r.note}</div>`:''}
+      </div>`;
+    });
+  }
+  return h;
+}
+
+function renderDevis(){
+  const probColor=(p)=>p>=75?'#3D8A6E':p>=50?'#C47B2E':'#B05555';
+  const statBadge=(s)=>{
+    if(s==='signe') return '<span class="badge badge-ok"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i> Signé</span>';
+    if(s==='annule') return '<span class="badge badge-danger">Annulé</span>';
+    if(s==='reporte') return '<span class="badge badge-report">Reporté</span>';
+    return '<span class="badge badge-warn">En cours</span>';
+  };
+  let data=[...S.devis];
+  if(S.sortDevis==='montant') data.sort((a,b)=>b.montant-a.montant);
+  else if(S.sortDevis==='proba') data.sort((a,b)=>b.proba-a.proba);
+  else data.sort((a,b)=>new Date(b.date)-new Date(a.date));
+  let h=sortPanel([{val:'date',label:'Date'},{val:'montant',label:'Montant'},{val:'proba',label:'Probabilité'}],S.sortDevis,'setSortDevis');
+  h+='<div class="search"><i class="ti ti-search" style="color:var(--muted);font-size:16px" aria-hidden="true"></i><input placeholder="Rechercher un devis..."></div>';
+  const en_cours=data.filter(d=>d.statut==='en_cours'||d.statut==='reporte');
+  const signes=data.filter(d=>d.statut==='signe');
+  const annules=data.filter(d=>d.statut==='annule');
+  const totalEC=en_cours.reduce((s,d)=>s+d.montant,0);
+  h+=`<div class="metric-grid">
+    <div class="metric"><div class="metric-label">En cours</div><div class="metric-val">${fmt(totalEC)}</div></div>
+    <div class="metric"><div class="metric-label">Taux moyen</div><div class="metric-val">${Math.round(en_cours.reduce((s,d)=>s+d.proba,0)/(en_cours.length||1))}%</div></div>
+  </div>`;
+  if(en_cours.length){
+    h+='<div class="section-label">En cours ('+en_cours.length+')</div>';
+    en_cours.forEach(d=>{
+      h+=`<div class="devis-card" onclick="openDevisModal(${d.id})">
+        <div class="card-row"><span class="devis-title">${d.nom}</span>${statBadge(d.statut)}</div>
+        <div class="devis-meta"><span class="card-amount" style="font-size:15px">${fmt(d.montant)}</span><span class="card-date">${fmtDate(d.date)}</span><span class="card-date">${d.client}</span></div>
+        <div class="prob-bar-wrap">
+          <div class="prob-label"><span>Probabilité</span><span style="color:${probColor(d.proba)};font-weight:500">${d.proba}%</span></div>
+          <div class="prob-bar"><div class="prob-fill" style="width:${d.proba}%;background:${probColor(d.proba)}"></div></div>
+        </div>
+        ${d.relanceDate?`<div style="font-size:12px;color:#4A5AB5;margin-top:6px"><i class="ti ti-calendar" style="font-size:12px" aria-hidden="true"></i> Relance prévue le ${fmtDate(d.relanceDate)}</div>`:''}
+      </div>`;
+    });
+  }
+  if(signes.length){
+    h+='<div class="section-label">Signés ('+signes.length+')</div>';
+    signes.forEach(d=>{
+      h+=`<div class="devis-card" onclick="openDevisModal(${d.id})">
+        <div class="card-row"><span class="devis-title">${d.nom}</span>${statBadge(d.statut)}</div>
+        <div class="devis-meta"><span class="card-amount" style="font-size:15px">${fmt(d.montant)}</span><span class="card-date">${fmtDate(d.date)}</span><span class="card-date">${d.client}</span></div>
+      </div>`;
+    });
+  }
+  if(annules.length){
+    h+='<div class="section-label">Annulés ('+annules.length+')</div>';
+    annules.forEach(d=>{
+      h+=`<div class="devis-card annule" onclick="openDevisModal(${d.id})">
+        <div class="card-row"><span class="devis-title" style="text-decoration:line-through">${d.nom}</span>${statBadge(d.statut)}</div>
+        <div class="devis-meta"><span class="card-amount" style="font-size:15px;color:var(--muted)">${fmt(d.montant)}</span><span class="card-date">${d.client}</span></div>
+      </div>`;
+    });
+  }
+  return h;
+}
+
+function renderPortefeuille(){
+  const signes=S.devis.filter(d=>d.statut==='signe');
+  const enCours=S.devis.filter(d=>d.statut==='en_cours'||d.statut==='reporte');
+  const totalCA=signes.reduce((s,d)=>s+d.montant,0);
+  const totalEC=enCours.reduce((s,d)=>s+d.montant,0);
+  const pct=Math.min(100,Math.round((totalCA/S.objectif)*100));
+  const monthOpts=getMonthOptions();
+  let h=`<div class="metric-grid">
+    <div class="metric"><div class="metric-label">Chiffre d'affaires</div><div class="metric-val green">${fmt(totalCA)}</div></div>
+    <div class="metric"><div class="metric-label">Devis en cours</div><div class="metric-val">${fmt(totalEC)}</div></div>
+  </div>
+  <div class="obj-wrap">
+    <div class="obj-header"><span class="obj-title">Objectif mensuel</span><button class="obj-edit" onclick="editObjectif()"><i class="ti ti-pencil" style="font-size:12px" aria-hidden="true"></i> Modifier</button></div>
+    <div class="obj-bar"><div class="obj-fill" style="width:${pct}%"></div></div>
+    <div class="obj-labels"><span>${fmt(totalCA)}</span><span>${fmt(S.objectif)}</span></div>
+    <div style="font-size:12px;color:var(--muted);margin-top:4px;text-align:right">${pct}% atteint</div>
+  </div>
+  <div class="month-select-wrap">
+    <label><i class="ti ti-calendar" style="font-size:14px;vertical-align:-2px" aria-hidden="true"></i> Période</label>
+    <select class="month-select" onchange="setFilterMois(this.value)">
+      <option value="tous" ${S.filterMois==='tous'?'selected':''}>Toute la période</option>
+      ${monthOpts.map(m=>`<option value="${m}" ${S.filterMois===m?'selected':''}>${monthLabel(m)}</option>`).join('')}
+    </select>
+  </div>`;
+  const filtered=S.filterMois==='tous'?signes:signes.filter(d=>{
+    const dt=new Date(d.date);
+    const key=dt.getFullYear()+'-'+(dt.getMonth()+1).toString().padStart(2,'0');
+    return key===S.filterMois;
+  });
+  if(!filtered.length){
+    h+='<div class="empty-state"><div class="empty-icon"><i class="ti ti-chart-bar" aria-hidden="true"></i></div><div class="empty-title">Aucun devis signé</div><div class="empty-sub">sur cette période</div></div>';
+    return h;
+  }
+  const byMonth={};
+  filtered.forEach(d=>{
+    const dt=new Date(d.date);
+    const k=dt.getFullYear()+'-'+(dt.getMonth()+1).toString().padStart(2,'0');
+    if(!byMonth[k]) byMonth[k]=[];
+    byMonth[k].push(d);
+  });
+  Object.keys(byMonth).sort().reverse().forEach(k=>{
+    const items=byMonth[k];
+    const tot=items.reduce((s,d)=>s+d.montant,0);
+    h+=`<div class="month-block"><div class="month-header-row"><span class="month-title-txt">${monthLabel(k)}</span><span class="month-total">${fmt(tot)}</span></div>`;
+    items.forEach(d=>{
+      h+=`<div class="month-row">
+        <div><div class="mrow-name">${d.nom}</div><div class="card-date">${d.client}</div></div>
+        <div class="mrow-right"><div class="mrow-amount">${fmt(d.montant)}</div><div class="mrow-date">${fmtDate(d.date)}</div></div>
+      </div>`;
+    });
+    h+='</div>';
+  });
+  return h;
+}
+
+function editObjectif(){
+  const v=prompt('Nouvel objectif mensuel (€) :',S.objectif);
+  if(v&&!isNaN(parseInt(v))){S.objectif=parseInt(v);render()}
+}
+
+/* ---- MODAL RELANCE ---- */
+function openRelanceModal(id){
+  const r=S.relances.find(x=>x.id===id);
+  if(!r) return;
+  closeModal();
+  const overlay=document.createElement('div');
+  overlay.className='modal-overlay';
+  overlay.innerHTML=`<div class="modal">
+    <div class="modal-title">${r.name}</div>
+    <div class="modal-sub">${fmt(r.montant)} · Relance le ${fmtDate(r.date)}</div>
+    <div class="action-grid">
+      <button class="action-btn modifier" onclick="openEditRelance(${id})">
+        <div class="action-icon" style="color:var(--sage)"><i class="ti ti-edit" aria-hidden="true"></i></div>
+        <div class="action-label sage">Modifier</div>
+      </button>
+      <button class="action-btn" style="border-color:#4A5AB5;background:#EEF0FB" onclick="openDupliquerRelance(${id})">
+        <div class="action-icon" style="color:#4A5AB5"><i class="ti ti-copy" aria-hidden="true"></i></div>
+        <div class="action-label blue">Nouvelle depuis celle-ci</div>
+      </button>
+    </div>
+    <div class="divider"></div>
+    <button class="action-btn annule" style="width:100%;display:flex;align-items:center;gap:10px;padding:10px 14px" onclick="supprimerRelance(${id})">
+      <i class="ti ti-trash" style="color:#904444;font-size:18px" aria-hidden="true"></i>
+      <span class="action-label red">Supprimer cette relance</span>
+    </button>
+    <div class="modal-actions"><button class="btn-secondary" onclick="closeModal()">Fermer</button></div>
+  </div>`;
+  document.querySelector('.app-wrap').appendChild(overlay);
+  window._overlay=overlay;
+}
+
+function openEditRelance(id){
+  const r=S.relances.find(x=>x.id===id);
+  closeModal();
+  const overlay=document.createElement('div');
+  overlay.className='modal-overlay';
+  overlay.innerHTML=`<div class="modal">
+    <div class="modal-title">Modifier la relance</div>
+    <div class="field"><label>Nom du client</label><input id="e_name" value="${r.name}"></div>
+    <div class="field"><label>Date de relance</label><input id="e_date" type="date" value="${r.date}"></div>
+    <div class="field"><label>Montant (€)</label><input id="e_mont" type="number" value="${r.montant}"></div>
+    <div class="field"><label>Note</label><input id="e_note" value="${r.note||''}" placeholder="Remarque optionnelle..."></div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal()">Annuler</button>
+      <button class="btn-primary" onclick="saveEditRelance(${id})">Enregistrer</button>
+    </div>
+  </div>`;
+  document.querySelector('.app-wrap').appendChild(overlay);
+  window._overlay=overlay;
+}
+
+function saveEditRelance(id){
+  const r=S.relances.find(x=>x.id===id);
+  r.name=document.getElementById('e_name').value||r.name;
+  r.date=document.getElementById('e_date').value||r.date;
+  r.montant=parseInt(document.getElementById('e_mont').value)||r.montant;
+  r.note=document.getElementById('e_note').value;
+  const d=diffDays(r.date);
+  r.urgence=d<0?'rouge':d<3?'orange':'vert';
+  closeModal();render();
+}
+
+function openDupliquerRelance(id){
+  const r=S.relances.find(x=>x.id===id);
+  closeModal();
+  const overlay=document.createElement('div');
+  overlay.className='modal-overlay';
+  const nextWeek=toISO(new Date(Date.now()+7*24*60*60*1000));
+  overlay.innerHTML=`<div class="modal">
+    <div class="modal-title">Nouvelle relance</div>
+    <div class="modal-sub">Créée depuis : ${r.name}</div>
+    <div class="field"><label>Nom du client</label><input id="d_name" value="${r.name}"></div>
+    <div class="field"><label>Date de relance</label><input id="d_date" type="date" value="${nextWeek}"></div>
+    <div class="field"><label>Montant (€)</label><input id="d_mont" type="number" value="${r.montant}"></div>
+    <div class="field"><label>Note</label><input id="d_note" value="${r.note||''}" placeholder="Remarque optionnelle..."></div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal()">Annuler</button>
+      <button class="btn-primary" onclick="saveDupRelance()">Créer</button>
+    </div>
+  </div>`;
+  document.querySelector('.app-wrap').appendChild(overlay);
+  window._overlay=overlay;
+}
+
+function saveDupRelance(){
+  const n=document.getElementById('d_name').value;
+  const d=document.getElementById('d_date').value;
+  const m=parseInt(document.getElementById('d_mont').value||0);
+  const note=document.getElementById('d_note').value;
+  if(n&&d){
+    const diff=diffDays(d);
+    S.relances.push({id:Date.now(),name:n,date:d,montant:m,urgence:diff<0?'rouge':diff<3?'orange':'vert',note});
+  }
+  closeModal();render();
+}
+
+function supprimerRelance(id){
+  if(!confirm('Supprimer cette relance ?')) return;
+  S.relances=S.relances.filter(x=>x.id!==id);
+  closeModal();render();
+}
+
+/* ---- MODAL DEVIS ---- */
+function openDevisModal(id){
+  const d=S.devis.find(x=>x.id===id);
+  if(!d) return;
+  closeModal();
+  const overlay=document.createElement('div');
+  overlay.className='modal-overlay';
+  const isClosed=d.statut==='signe'||d.statut==='annule';
+  overlay.innerHTML=`<div class="modal">
+    <div class="modal-title">${d.nom}</div>
+    <div class="modal-sub">${d.client} · ${fmt(d.montant)} · ${fmtDate(d.date)}</div>
+    ${isClosed?`<div style="font-size:13px;color:var(--muted);margin-bottom:12px;text-align:center">Ce devis est ${d.statut==='signe'?'signé':'annulé'}. Vous pouvez le remettre en cours.</div>`:''}
+    <div class="action-grid">
+      <button class="action-btn signe" onclick="setDevisStatut(${id},'signe')">
+        <div class="action-icon" style="color:#2F7A5E"><i class="ti ti-circle-check" aria-hidden="true"></i></div>
+        <div class="action-label green">Validé</div>
+      </button>
+      <button class="action-btn annule" onclick="setDevisStatut(${id},'annule')">
+        <div class="action-icon" style="color:#904444"><i class="ti ti-circle-x" aria-hidden="true"></i></div>
+        <div class="action-label red">Annulé</div>
+      </button>
+      <button class="action-btn reporte" onclick="openReporterDevis(${id})">
+        <div class="action-icon" style="color:#4A5AB5"><i class="ti ti-clock-pause" aria-hidden="true"></i></div>
+        <div class="action-label blue">Reporté</div>
+      </button>
+      <button class="action-btn modifier" onclick="setDevisStatut(${id},'en_cours')">
+        <div class="action-icon" style="color:var(--sage)"><i class="ti ti-refresh" aria-hidden="true"></i></div>
+        <div class="action-label sage">En cours</div>
+      </button>
+    </div>
+    <div class="modal-actions"><button class="btn-secondary" onclick="closeModal()">Fermer</button></div>
+  </div>`;
+  document.querySelector('.app-wrap').appendChild(overlay);
+  window._overlay=overlay;
+}
+
+function setDevisStatut(id,statut){
+  const d=S.devis.find(x=>x.id===id);
+  d.statut=statut;
+  if(statut!=='reporte') delete d.relanceDate;
+  closeModal();render();
+}
+
+function openReporterDevis(id){
+  const d=S.devis.find(x=>x.id===id);
+  closeModal();
+  const def=toISO(new Date(Date.now()+14*24*60*60*1000));
+  const overlay=document.createElement('div');
+  overlay.className='modal-overlay';
+  overlay.innerHTML=`<div class="modal">
+    <div class="modal-title">Reporter le devis</div>
+    <div class="modal-sub">${d.nom} · ${d.client}</div>
+    <div class="field">
+      <label>Date de relance automatique</label>
+      <input id="r_date" type="date" value="${def}">
+    </div>
+    <div style="font-size:12px;color:var(--muted);margin-top:-6px;margin-bottom:12px">Une relance sera ajoutée automatiquement dans votre liste.</div>
+    <div class="field"><label>Note (optionnel)</label><input id="r_note" placeholder="ex: Client en déplacement jusqu'au..."></div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal()">Annuler</button>
+      <button class="btn-primary" onclick="saveReporter(${id})">Confirmer</button>
+    </div>
+  </div>`;
+  document.querySelector('.app-wrap').appendChild(overlay);
+  window._overlay=overlay;
+}
+
+function saveReporter(id){
+  const d=S.devis.find(x=>x.id===id);
+  const date=document.getElementById('r_date').value;
+  const note=document.getElementById('r_note').value;
+  d.statut='reporte';
+  d.relanceDate=date;
+  const diff=diffDays(date);
+  S.relances.push({
+    id:Date.now(),
+    name:d.client,
+    date:date,
+    montant:d.montant,
+    urgence:diff<0?'rouge':diff<3?'orange':'vert',
+    note:note||`Devis reporté : ${d.nom}`
+  });
+  closeModal();render();
+}
+
+/* ---- MODAL AJOUT ---- */
+function openAddModal(){
+  closeModal();
+  const t=S.tab;
+  const overlay=document.createElement('div');
+  overlay.className='modal-overlay';
+  let fields='';
+  if(t==='relances'){
+    fields=`<div class="field"><label>Nom du client</label><input id="m_name" placeholder="ex: Martin Dupont"></div>
+    <div class="field"><label>Date de relance</label><input id="m_date" type="date"></div>
+    <div class="field"><label>Montant (€)</label><input id="m_mont" type="number" placeholder="0"></div>
+    <div class="field"><label>Note (optionnel)</label><input id="m_note" placeholder="Remarque..."></div>`;
+  } else if(t==='devis'){
+    fields=`<div class="field"><label>Matériel / intitulé</label><input id="m_name" placeholder="ex: Serveurs NAS"></div>
+    <div class="field"><label>Client</label><input id="m_client" placeholder="ex: Groupe ACME"></div>
+    <div class="field"><label>Montant (€)</label><input id="m_mont" type="number" placeholder="0"></div>
+    <div class="field"><label>Probabilité (%)</label><input id="m_proba" type="number" min="0" max="100" value="50"></div>`;
+  } else {
+    overlay.remove();return;
+  }
+  overlay.innerHTML=`<div class="modal">
+    <div class="modal-title">Ajouter ${t==='relances'?'une relance':'un devis'}</div>
+    ${fields}
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeModal()">Annuler</button>
+      <button class="btn-primary" onclick="saveNew()">Enregistrer</button>
+    </div>
+  </div>`;
+  document.querySelector('.app-wrap').appendChild(overlay);
+  window._overlay=overlay;
+}
+
+function saveNew(){
+  if(S.tab==='relances'){
+    const n=document.getElementById('m_name')?.value;
+    const d=document.getElementById('m_date')?.value;
+    const m=parseInt(document.getElementById('m_mont')?.value||0);
+    const note=document.getElementById('m_note')?.value||'';
+    if(n&&d){
+      const diff=diffDays(d);
+      S.relances.push({id:Date.now(),name:n,date:d,montant:m,urgence:diff<0?'rouge':diff<3?'orange':'vert',note});
+    }
+  } else if(S.tab==='devis'){
+    const n=document.getElementById('m_name')?.value;
+    const cl=document.getElementById('m_client')?.value||'';
+    const m=parseInt(document.getElementById('m_mont')?.value||0);
+    const p=parseInt(document.getElementById('m_proba')?.value||50);
+    if(n) S.devis.push({id:Date.now(),nom:n,client:cl,montant:m,date:toISO(new Date()),proba:p,statut:'en_cours'});
+  }
+  closeModal();render();
+}
+
+function closeModal(){if(window._overlay){window._overlay.remove();window._overlay=null}}
+render();
+</script>
